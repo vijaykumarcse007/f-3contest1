@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee form</title>
+    <style>
+        .bar{
+            display: flex;
+            justify-content:space-between;
+
+        }
+        .body{
+            background: #1E1E1E;
+        }
+        p{
+            color: antiquewhite;
+            font-family: Inter;
+            font-size: 16px;
+            font-weight: 400;
+            line-height: 22px;
+            letter-spacing: 0em;
+            text-align: left;
+
+
+        }
+        input{
+            border-radius: 5px;
+            width: 30vw;
+            border: 1px solid #FFFFFF;
+            height: 5vh;
+            background: #1E1E1E;
+            color: #FFFFFF;
+        }
+        .h3{
+            font-family:Inter;
+            font-style: normal;
+            font-weight: 400;
+            font-size: 24px;
+            line-height: 29px;
+            color: #FFFFFF;
+        }
+        .btn{
+            background-color: #FFFFFF;;
+            padding: 10px;
+            margin: 25px 0px;
+            width: 12vw;
+            border-radius: 5px;
+        }
+        .btn:hover{
+            cursor: pointer;
+        }
+        h2{
+            font-family: 'Inter';
+            font-style: normal;
+            font-weight: 400;
+            font-size: 20px;
+            line-height: 29px;
+/* identical to box height */
+
+
+color: #FFFFFF;
+        }
+    </style>
+</head>
+<body class="body">
+    
+    <h3 class="h3">New Employees</h3>
+    <div class="bar">
+        <div>
+            <p>Enter Name</p>
+            <input type="text" id="inputField1">
+        </div>
+        <div>
+            <p>Enter Profession</p>
+            <input type="text" id="inputField2">
+        </div>
+        <div>
+            <p>Enter Age</p>
+            <input type="number" id="inputField3">
+        </div>
+
+    </div>
+    <button class="btn" onclick="addEmployee()">Add User</button>
+    <div id="errorDiv"></div>
+    <div id="successDiv"></div>
+    <div>
+        <h2>Added Employees</h2>
+        <div id="employeeList"></div>
+      </div>
+
+<script>
+var employeeList = [];
+    var id = 1;
+function addEmployee() {
+  var name = document.getElementById("inputField1").value;
+  var profession = document.getElementById("inputField2").value;
+  var age = document.getElementById("inputField3").value;
+  var errorDiv = document.getElementById("errorDiv");
+  var successDiv = document.getElementById("successDiv");
+
+  if (name == "" || profession == "" || age == "") {
+    errorDiv.innerHTML = "Error : Please Make sure All the fields are filled before adding in an employee !";
+    errorDiv.style.color = "red";
+    successDiv.innerHTML = "";
+  } else {
+    var employee = {
+      id: id,
+      name: name,
+      profession: profession,
+      age: age
+    };
+    employeeList.push(employee);
+    id++;
+    showEmployeeList();
+    successDiv.innerHTML = "Success : Employee Added!";
+    successDiv.style.color = "green";
+    errorDiv.innerHTML = "";
+    document.getElementById("inputField1").value = "";
+    document.getElementById("inputField2").value = "";
+    document.getElementById("inputField3").value = "";
+    
+  }
+}
+
+
+
+
+function showEmployeeList() {
+        var employeeListDiv = document.getElementById("employeeList");
+        employeeListDiv.innerHTML = "";
+        employeeList.forEach(function(employee) {
+          var employeeDiv = document.createElement("div");
+          var deleteButton = document.createElement("button");
+          deleteButton.innerHTML = "Delete User";
+          deleteButton.onclick = function() {
+            deleteEmployee(employee.id);
+          };
+          
+          employeeDiv.innerHTML =
+            employee.id +
+            "|   Name: " +
+            employee.name +
+            "|   Profession: " +
+            employee.profession +
+            "|   Age: " +
+            employee.age;
+            
+          
+          
+          
+          deleteButton.style.backgroundColor='#FFFFFF'
+          deleteButton.style.margin='0px 20px'
+          deleteButton.style.border='3px solid white'
+          deleteButton.style.borderRadius='20px';
+          deleteButton.style.color='#000000';
+
+
+          
+          employeeDiv.style.color='white'
+          employeeDiv.style.margin='15px 0px';
+          employeeDiv.style.border='1px solid #FFFFFF';
+          employeeDiv.style.width='auto';
+          employeeDiv.style.borderRadius='6px';
+          employeeDiv.style.fontFamily='Inter';
+
+          employeeListDiv.appendChild(employeeDiv);
+          employeeDiv.appendChild(deleteButton);
+          
+          
+          
+        });
+      }
+
+      function deleteEmployee(id) {
+        
+        employeeList = employeeList.filter(function(employee) {
+            
+            
+          return employee.id !== id;
+          
+        });
+        // employee.id--;
+        showEmployeeList();
+      }
+    </script>
+</script>
+
+</body>
+</html>
